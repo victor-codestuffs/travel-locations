@@ -1,0 +1,62 @@
+$body-color: white
+
+@import "mixins"
+@import "reset"
+
+body
+  background-color: $body-color
+  line-height: 1
+
+.Container
+  display: flex
+  height: 100vh
+
+.Header
+  flex-basis: 4rem
+
+.Header-title
+  transform: rotate(-90deg)
+
+.Map
+  background-color: tomato
+  flex: 1
+
+.Aside
+  flex-basis: 36rem
+  padding: 1rem 2rem
+
+.Nav
+  padding: 1rem 0
+
+.Nav-list
+  display: flex
+
+.Nav-listItem
+  &:first-child
+    margin-left: -0.5rem
+
+.Nav-listItemLink
+  display: block
+  padding: 0.5rem
+  &.is-selected
+    color: red
+
+.Main
+  border-top: 1px solid lightgray
+  border-bottom: 1px solid lightgray
+  padding: 2rem 0
+
+.Main-content
+  display: none
+  &.is-active
+    display: block
+
+.Main-contentTitle
+
+.Main-contentText
+
+.Footer
+  padding: 1rem 0
+
+.Footer-text
+
