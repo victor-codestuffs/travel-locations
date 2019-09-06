@@ -20,13 +20,15 @@ body
 .Map
   background-color: tomato
   flex: 1
+  position: relative
 
 .Aside
+  display: flex
+  flex-direction: column
   flex-basis: 36rem
-  padding: 1rem 2rem
 
 .Nav
-  padding: 1rem 0
+  padding: 1rem 2rem
 
 .Nav-list
   display: flex
@@ -44,19 +46,17 @@ body
 .Main
   border-top: 1px solid lightgray
   border-bottom: 1px solid lightgray
-  padding: 2rem 0
+  overflow-y: overlay
 
 .Main-content
-  display: none
-  &.is-active
-    display: block
+  padding: 2rem
 
 .Main-contentTitle
 
 .Main-contentText
 
 .Footer
-  padding: 1rem 0
+  padding: 1rem 2rem
 
 .Footer-text
 

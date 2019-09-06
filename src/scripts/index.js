@@ -7,68 +7,73 @@ main();
 
 function main() {
   const map = initMap();
-  const chapters = getChapters();
+  const cities = getCities();
 
-  let selectedContent = "one";
+  let selectedCity = cities[0];
 
   const nav = document.querySelector(".Nav");
   const links = document.querySelectorAll(".Nav-listItemLink");
   const sections = document.querySelectorAll(".Main-content");
+  const main = document.querySelector(".Main");
+
+  const selectCity = (targetCity, scrollTo = false) => {
+    if (selectedCity === targetCity) return;
+    map.flyTo(cities[targetCity]);
+    selectedCity = targetCity;
+
+    if (scrollTo) {
+      const selector = `section[data-content="${targetCity}"]`;
+      const contentEl = document.querySelector(selector);
+      contentEl.scrollIntoView();
+    }
+  };
 
   nav.addEventListener("click", ev => {
     // If link is clicked
     if (ev.target && ev.target.classList.contains("Nav-listItemLink") ) {
       ev.preventDefault();
 
-      const targetSection = ev.target.dataset.select;
-      if (targetSection === selectedContent) return;
-      selectedContent = targetSection;
+      const targetCity = ev.target.dataset.select;
+      selectCity(targetCity, true);
+    }
+  });
 
-      map.flyTo(chapters[selectedContent]);
-
-      links.forEach(link => {
-        if (link === ev.target) {
-          ev.target.classList.add("is-selected");
-        } else {
-          link.classList.remove("is-selected");
-        }
-      });
-
-      sections.forEach(section => {
-        if (section.dataset.section === selectedContent) {
-          section.classList.add("is-active");
-        } else {
-          section.classList.remove("is-active");
-        }
-      });
+  const cityNames = Object.keys(cities);
+  main.addEventListener("scroll", () => {
+    for (let i = 0; i < cityNames.length; i++) {
+      const cityName = cityNames[i];
+      const selector = `section[data-content="${cityName}"]`;
+      if (isElementOnScreen(selector)) {
+        selectCity(cityName);
+        break;
+      }
     }
   });
 }
 
-
-function getChapters() {
+function getCities() {
   return {
-    'one': {
+    'hanamura': {
         bearing: -0,
         center: [-108.866174, 49.272291],
         zoom: 2,
         speed: 0.8,
         pitch: 0
     },
-    'two': {
+    'lijiang': {
         bearing: 0,
         center: [-105.391504, 34.371086],
         zoom: 6.00,
         pitch: 0
     },
-    'three': {
+    'junkertown': {
         center: [-122.316235, 47.605958],
         bearing: 54.40,
         zoom: 12.59,
         speed: 0.6,
         pitch: 44.50
     },
-    'four': {
+    'hollywood': {
         bearing: 12.80,
         center: [-0.075681, 51.498018],
         zoom: 13.18,
@@ -108,7 +113,7 @@ function getChapters() {
 
 function initMap() {
   mapboxgl.accessToken = 'pk.eyJ1IjoiYnJhdmUtZXhwbG9yZXIiLCJhIjoiY2piemVub3VrM2ljNTMzbzB6ZmxuYnczcyJ9.WnNlpz-4Fn-GXFC11M2yaw';
-  var map = new mapboxgl.Map({
+  const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/outdoors-v10',
       bearing: -0,
@@ -121,29 +126,9 @@ function initMap() {
   return map;
 }
 
-  // On every scroll event, check which element is on screen
-  // window.onscroll = function() {
-  //     var chapterNames = Object.keys(chapters);
-  //     for (var i = 0; i < chapterNames.length; i++) {
-  //         var chapterName = chapterNames[i];
-  //         if (isElementOnScreen(chapterName)) {
-  //             setActiveChapter(chapterName);
-  //             break;
-  //         }
-  //     }
-  // };
-  // var activeChapterName = 'baker';
-  // function setActiveChapter(chapterName) {
-  //     if (chapterName === activeChapterName) return;
-  //     map.flyTo(chapters[chapterName]);
-  //     document.getElementById(chapterName).setAttribute('class', 'active');
-  //     document.getElementById(activeChapterName).setAttribute('class', '');
-  //     activeChapterName = chapterName;
-  // }
-
-  // function isElementOnScreen(id) {
-  //     var element = document.getElementById(id);
-  //     var bounds = element.getBoundingClientRect();
-  //     return bounds.top < window.innerHeight && bounds.bottom > 0;
-  // }
+function isElementOnScreen(selector) {
+  const element = document.querySelector(selector);
+  const bounds = element.getBoundingClientRect();
+  return bounds.top < window.innerHeight && bounds.bottom > 0;
+}
 
