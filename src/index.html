@@ -4,7 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Travel Locations</title>
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet' />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <style>
+    #map { position:absolute; top:0; bottom:0; width:100%; }
+  </style>
 </head>
 <body>
   <div class="Container">
@@ -16,8 +21,7 @@
         <li class="Header-icon"></li>
       </ul>
     </header>
-    <div class="Map">
-    </div>
+    <div class="Map" id="map"></div>
     <aside class="Aside">
       <nav class="Nav">
         <ul class="Nav-list">
